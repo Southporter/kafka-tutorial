@@ -22,7 +22,7 @@ const consumer = kafka.consumer({ groupId: 'kafka-tutorial-js-consumer-group'});
 
     // And consume
     await consumer.connect();
-    await consumer.subscribe({ topic: "pinball.scores" });
+    await consumer.subscribe({ topic: "pinball.scores", fromBeginning: true });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             console.log(`Key: ${message.key} and value: ${message.value} was sent to partition ${partition} of ${topic}`)

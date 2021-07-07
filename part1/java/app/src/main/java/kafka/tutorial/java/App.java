@@ -27,6 +27,7 @@ public class App {
         properties.put("client.id", "kafka-tutorial-java");
         properties.put("group.id", "kafka-tutorial-java-consumer-group");
         properties.put("enable.auto.commit", "true");
+        properties.put("auto.offset.reset", "earliest");
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         return properties;
