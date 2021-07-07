@@ -1,0 +1,26 @@
+{
+  "name": "kafka-tutorial-js",
+  "version": "1.0.0",
+  "description": "An introduction to producing to and consuming from Kafka in Javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssedrick/kafka-tutorial.git"
+  },
+  "keywords": [
+    "kafka",
+    "tutorial"
+  ],
+  "author": "Shem Sedrick <ssedrick1@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/ssedrick/kafka-tutorial/issues"
+  },
+  "homepage": "https://github.com/ssedrick/kafka-tutorial#readme",
+  "dependencies": {
+    "kafkajs": "^1.15.0"
+  }
+}
