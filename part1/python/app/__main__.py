@@ -16,7 +16,7 @@ def run():
         'auto.offset.reset': 'earliest'
     })
     consumer.subscribe(['pinball.scores'])
-    record = consumer.poll(1.0)
+    record = consumer.poll(100.0)
     if record is None:
         print("No record to consume")
     else:

@@ -14,7 +14,7 @@ const consumer = kafka.consumer({ groupId: 'kafka-tutorial-js-consumer-group'});
     await producer.send({
         topic: 'pinball.scores',
         messages: [
-            { key: 10, value: "10" },
+            { key: '10', value: '10' },
         ],
     });
 

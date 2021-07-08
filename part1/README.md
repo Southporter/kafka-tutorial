@@ -38,6 +38,7 @@ Again, there are a lot of config options, but look at the documentation
 for more information. Here are a few key properties:
 
 | key | alternate | value |
+| --- | --------- | ----- |
 | group.id | groupId | Identifies the group to which the consumer belongs. This group id is used to coordinate between consumers so that all partitions are covered. It will rebalance partition assignments if a new consumer joins or one drops out |
 | bootstrap.servers | brokers | same as for producers |
 | auto.offset.reset | fromBeginning | Tells the consumer where to start reading values. Earliest or fromBeginning will look at the first message in the topic. Default is to only consume new messages |

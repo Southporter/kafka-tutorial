@@ -34,16 +34,17 @@ public class App {
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        var producer = new KafkaProducer<Integer, String>(getProducerConnectionProperties());
-        var response = producer.send(new ProducerRecord<>("pinball.scores", 10, "150"));
+        var producer = new KafkaProducer<String, String>(getProducerConnectionProperties());
+        var response = producer.send(new ProducerRecord<>("pinball.scores",  "10", "150"));
         response.get();
 
-        var consumer = new KafkaConsumer<Integer, String>(getConsumerConnectionProperties());
+        var consumer = new KafkaConsumer<String, String>(getConsumerConnectionProperties());
         consumer.subscribe(List.of("pinball.scores"));
 
-        var records = consumer.poll(Duration.ofMillis(100));
+        var records = consumer.poll(Duration.ofSeconds(5));
+        System.out.println("Found " + records.count() + " records");
         for (var record : records) {
-            System.out.printf("Key: %d and value: %s was sent to partition %d of topic %s",
+            System.out.printf("Key: %s and value: %s was sent to partition %d of topic %s\n",
                 record.key(),
                 record.value(),
                 record.partition(),
