@@ -3,15 +3,18 @@
 Welcome! Let's get started.
 
 ## Pick your poison
+
 Kafka has libraries for most languages. Pick a language you would like
 to use, and If you cannot find your favorite
 language in this folder, feel free to open an Issue or PR.
 
 ## Getting going
+
 Depending on your language this will be a bit different. First install
 packages. Then look into the main file.
 
 ### Producing Basics
+
 In your main file, you will find some code for initializing the Kafka
 Producer. There are many more configuration options, which I won't go
 into here other than a few key properties:
@@ -38,3 +41,10 @@ for more information. Here are a few key properties:
 | group.id | groupId | Identifies the group to which the consumer belongs. This group id is used to coordinate between consumers so that all partitions are covered. It will rebalance partition assignments if a new consumer joins or one drops out |
 | bootstrap.servers | brokers | same as for producers |
 | auto.offset.reset | fromBeginning | Tells the consumer where to start reading values. Earliest or fromBeginning will look at the first message in the topic. Default is to only consume new messages |
+
+## The Goal
+
+In this folder you will find 2 files: [scores.txt](scores.txt) and [ids.txt](ids.txt).
+ Scores need to be published to the `pinball.scores` topic and ids need to be published
+to the `pinball.users` topic.
+Each line in the file is a key:value pair.
