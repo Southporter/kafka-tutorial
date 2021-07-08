@@ -15,6 +15,16 @@ If you find an issues, please open an issue or fork the repo and create
 a pull request with your fix.
 
 
+### The Goal
+Throughout this tutorial, you will be building an application that takes a
+stream of points and creating a Pinball High Score board using Kafka.
+In a real world environment, your pinball game would be producing the points,
+game ids, etc., but we will be producing them from a static list as an exercise.
+
+For those that enjoy music while coding, enjoy some American Rock with
+Pinball Wizard: [Youtube](https://youtu.be/4AKbUm8GrbM), [Apple Music](https://music.apple.com/us/album/pinball-wizard/1434897581), [Spotify](https://open.spotify.com/track/6LbbHFEajG9e4m0G3L47c4?si=203c37caed954e8b)
+
+
 ### Supporting Infrastructure
 The first folder you should explore is the Infra folder. In there you will
 find a [docker compose](infra/docker-compose.yml) file that will let you spin
