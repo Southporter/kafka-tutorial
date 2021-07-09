@@ -1,0 +1,12 @@
+{
+  "name": "users-file-source",
+  "connector.class": "FileStreamSource",
+  "tasks.max": 1,
+  "file": "/etc/kafka-connect/users.txt",
+  "topic": "pinball.users",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+
+  "transforms": "MakeStruct",
+  "transforms.MakeStruct.type": "org.apache.kafka.connect.transforms.HoistField$Value",
+  "transforms.MakeStruct.field": "username"
+}
