@@ -1,0 +1,16 @@
+{
+  "name": "users-jdbc-sink",
+  "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+  "tasks.max": 1,
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+
+  "connection.url": "jdbc:mysql://db:3306/pinball?useSSL=false&requireSSL=false",
+  "connection.user": "kafka",
+  "connection.password": "tutorial",
+
+  "topics": "pinball.users",
+
+  "insert.mode": "insert",
+  "pk.mode": "none",
+  "table.name.format": "user"
+}
