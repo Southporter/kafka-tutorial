@@ -1,0 +1,21 @@
+{
+  "name": "scores-jdbc-sink",
+  "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+  "tasks.max": 1,
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter.schemas.enable": "true",
+
+  "connection.url": "jdbc:mysql://db:3306/pinball?useSSL=false&requireSSL=false",
+  "connection.user": "kafka",
+  "connection.password": "tutorial",
+
+  "topics": "pinball.highscores",
+
+  "insert.mode": "insert",
+  "pk.mode": "none",
+  "table.name.format": "score",
+
+  "transforms": "DeleteGameId",
+  "transforms.DeleteGameId.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+  "transforms.DeleteGameId.blacklist": "gameId"
+}
