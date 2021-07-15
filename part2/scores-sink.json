@@ -14,7 +14,11 @@
   "pk.mode": "none",
   "table.name.format": "score",
 
-  "transforms": "DeleteGameId",
+  "transforms": "CastValues,DeleteGameId",
+
+  "transforms.CastValues.type": "org.apache.kafka.connect.transforms.Cast$Value",
+  "transforms.CastValues.spec": "userId:int64,score:int64",
+
   "transforms.DeleteGameId.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
   "transforms.DeleteGameId.blacklist": "gameId"
 }
