@@ -1,2 +1,2 @@
-{"schema":{"type": "struct", "fields":[{"type":"number","optional":"false","field":"userId"},{"type":"number","optional":"false","field":"score"},{"type":"string","optional":"true","field":"gameId"}]},"payload":{"userId":16, "score":1000, "gameId": "1"}}
-{"schema":{"type": "struct", "fields":[{"type":"number","optional":"false","field":"userId"},{"type":"number","optional":"false","field":"score"},{"type":"string","optional":"true","field":"gameId"}]},"payload":{"userId":15, "score":1050, "gameId": "2"}}
+{"userId":16, "score":1000, "gameId": "1"}
+{"userId":15, "score":1050, "gameId": "2"}
