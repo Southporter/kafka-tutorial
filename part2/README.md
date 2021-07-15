@@ -98,9 +98,9 @@ following shape:
 
 ```json
 {
-  "userId": 3,
-  "score": 150,
-  "gameId": 15
+  "userId": "3",
+  "score": "150",
+  "gameId": "15"
 }
 ```
 
@@ -113,6 +113,24 @@ into a `score` table with the following columns:
 | userId | integer | the id of a user. This is a foreign key into the users table |
 | score | BigInt | The score for that game |
 
-You will need at least 1 transform for this: Dropping the gameId key.
+You will need at least 2 transform for this: Dropping the gameId key, and converting
+the strings to numbers.
 
 Good luck!
+
+#### Testing
+To test the connector, there are 2 values that we can send into the `pinball.highscores`
+topic to verify that it is working.
+
+```shell
+# Need to be in the infra directory
+cd ../infra
+
+docker-compose exec kafka-1 /bin/sh
+
+kafka-console-producer --bootstrap-server localhost:9092 \
+   --topic pinball.highscores \
+   --property value.serializers=io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer \
+   --property value.serializers.schema.registry.url=http://schema-registry:8081 \
+   < /etc/tutorial/example-scores.txt
+```
