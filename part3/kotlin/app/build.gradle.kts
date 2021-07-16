@@ -17,6 +17,14 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+
+    maven {
+        url = uri("https://packages.confluent.io/maven")
+    }
+
+    maven {
+        url = uri("https://jitpack.io")
+    }
 }
 
 dependencies {
@@ -27,7 +35,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     // This dependency is used by the application.
-    implementation("com.google.guava:guava:30.1-jre")
+    implementation("org.apache.kafka:kafka-clients:2.8.0")
+    implementation("org.apache.kafka:kafka-streams:2.8.0")
+    implementation("io.confluent:kafka-json-serializer:6.2.0")
+    implementation("io.confluent:kafka-streams-json-schema-serde:6.2.0")
+
+    implementation("org.slf4j:slf4j-simple:1.7.31")
 
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test")

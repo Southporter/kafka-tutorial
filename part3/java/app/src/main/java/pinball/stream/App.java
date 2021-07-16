@@ -4,8 +4,11 @@
 package pinball.stream;
 
 import io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Produced;
@@ -18,16 +21,27 @@ public class App {
     private static final String INPUT_TOPIC = "pinball.scores";
     private static final String OUTPUT_TOPIC = "pinball.highscores";
 
-    public void run() {
+    private Properties getKafkaProperties() {
         var props = new Properties();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:29092,localhost:39092");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); // Always read from beginning, usually want to only read from provided offset
 
+        props.put(ProducerConfig.ACKS_CONFIG, "-1");
+        props.put(ProducerConfig.CLIENT_ID_CONFIG, "kafka-stream-tutorial-java");
+
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kafka-streams-tutorial-java");
+        return props;
+    }
+
+
+    public void run() {
         var builder = new StreamsBuilder();
         var outputSerde = new KafkaJsonSchemaSerde<ScoreRecord>();
-        var stream = builder.stream(INPUT_TOPIC, Consumed.with(Serdes.Integer(), Serdes.Integer()));
-        stream.mapValues(value -> new ScoreRecord(value))
-            .to(OUTPUT_TOPIC, Produced.with(Serdes.Integer(), outputSerde));
+        var stream = builder.stream(INPUT_TOPIC, Consumed.with(Serdes.String(), Serdes.String()));
+        stream.mapValues(value -> new ScoreRecord(Integer.parseInt(value, 10)))
+            .to(OUTPUT_TOPIC, Produced.with(Serdes.String(), outputSerde));
 
-        var app = new KafkaStreams(builder.build(), props);
+        var app = new KafkaStreams(builder.build(), getKafkaProperties());
         app.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(app::close));
