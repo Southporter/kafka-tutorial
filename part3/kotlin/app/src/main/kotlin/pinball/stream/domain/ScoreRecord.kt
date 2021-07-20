@@ -3,5 +3,8 @@ package pinball.stream.domain
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class ScoreRecord(
-    @JsonProperty val score: Long
+    @JsonProperty var score: Long,
+    @JsonProperty var userId: String,
+    @JsonProperty var gameId: String,
 )
+

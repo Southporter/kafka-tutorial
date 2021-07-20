@@ -10,7 +10,12 @@ import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.StreamsConfig
 import org.apache.kafka.streams.kstream.Consumed
 import org.apache.kafka.streams.kstream.Produced
+import org.apache.kafka.streams.state.Stores
+import pinball.stream.aggregators.ScoreAggregator
+import pinball.stream.domain.ScoreAggregate
 import pinball.stream.domain.ScoreRecord
+import pinball.stream.store.processors.UserStoreProcessor
+import pinball.stream.store.processors.UserStoreProcessorSupplier
 import java.util.*
 
 fun getStreamProps(): Properties {
@@ -29,6 +34,22 @@ fun getScoreRecordSerde(): Serde<ScoreRecord> {
     return KafkaJsonSchemaSerde()
 }
 
+const val UserStoreName = "USER_ID_STORE"
+
+fun addStore(builder: StreamsBuilder) {
+    val storeBuilder = Stores.keyValueStoreBuilder(
+        Stores.inMemoryKeyValueStore(UserStoreName),
+        Serdes.String(),
+        Serdes.String(),
+    )
+    builder.addGlobalStore(
+        storeBuilder,
+        inputTopic,
+        Consumed.with(Serdes.String(), Serdes.String()),
+        UserStoreProcessorSupplier()
+    )
+}
+
 const val inputTopic = "pinball.scores"
 const val outputTopic = "pinball.highscores"
 
@@ -36,8 +57,15 @@ fun main() {
     val props = getStreamProps()
 
     var builder = StreamsBuilder()
+
+    addStore(builder)
+
     builder.stream(inputTopic, Consumed.with(Serdes.String(), Serdes.String()))
-        .mapValues { v -> ScoreRecord(score = v.toLong()) }
+        .groupBy { k, _ -> k }
+        .aggregate({ -> ScoreAggregate() }, ScoreAggregator())
+        .toStream()
+        .filter { _, value ->  value.isDone() }
+        .mapValues { value -> value.getScore() }
         .to(outputTopic, Produced.with(Serdes.String(), getScoreRecordSerde()))
 
     val stream = KafkaStreams(builder.build(), props)
